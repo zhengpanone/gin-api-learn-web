@@ -13,7 +13,9 @@ module.exports = {
     sourceType: 'module'
   },
   plugins: ['vue', '@typescript-eslint'],
-  rules: {},
+  rules: {
+    'vue/multi-word-component-names': 0
+  },
   globals: {
     defineProps: 'readonly',
     defineEmits: 'readonly',

@@ -1,13 +1,14 @@
 
 <template>
-  <div>{{ mainStore.name }}</div>
-  <!-- 路由渲染出口 -->
-  <router-view />
+  <el-config-provider :locale="locale">
+    <!-- 路由渲染出口 -->
+    <router-view />
+  </el-config-provider>
 </template>
 <script setup lang="ts">
-import { useMainStore } from '@/store/index'
-const mainStore = useMainStore()
+import zhCn from 'element-plus/lib/locale/lang/zh-cn'
+const locale = zhCn
 </script>
-<style>
+<style scoped>
 
-  </style>
+</style>

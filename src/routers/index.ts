@@ -36,7 +36,7 @@ const router = createRouter({
 
 // 全局前置守卫
 router.beforeEach(() => {
-  nprogress.start()
+  nprogress.start() // 页面加载进度条
 })
 // 全局后置守卫
 router.afterEach(() => {

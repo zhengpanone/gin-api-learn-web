@@ -1,13 +1,17 @@
 <template>
   <el-icon
     @click="handleCollapse"
+    v-show="store.isCollapse"
+    style="cursor: pointer;"
   >
-    <template v-if="store.isCollapse">
-      <expand />
-    </template>
-    <template v-else>
-      <fold />
-    </template>
+    <expand />
+  </el-icon>
+  <el-icon
+    @click="handleCollapse"
+    v-show="!store.isCollapse"
+    style="cursor: pointer;"
+  >
+    <fold />
   </el-icon>
 </template>
 <script lang="ts" setup>

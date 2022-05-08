@@ -24,8 +24,10 @@ import AppHeader from './AppHeader/index.vue'
 height: 100vh;
 }
 .el-header {
- background-color: #b3c0d1;
  color: #333;
+ display: flex;
+ align-items: center;
+ box-sizing: border-box;
 }
 .el-aside {
  background-color: #304156;

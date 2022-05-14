@@ -20,24 +20,28 @@ import AppHeader from './AppHeader/index.vue'
 
 </script>
 <style scoped>
-.el-container{
-height: 100vh;
+.el-container {
+  height: 100vh;
 }
+
 .el-header {
- color: #333;
- display: flex;
- align-items: center;
- box-sizing: border-box;
+  background-color: #fff;
+  color: #333;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  box-sizing: border-box;
 }
+
 .el-aside {
- background-color: #304156;
-color: #333;
-width: auto;
+  background-color: #304156;
+  color: #333;
+  width: auto;
 }
 
- .el-main {
-
- color: #333;
+.el-main {
+  background-color: #E9EEF3;
+  color: #333;
 }
-
 </style>

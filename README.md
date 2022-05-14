@@ -1,3 +1,5 @@
+github地址：https://gitee.com/zhengpanone/shop-admin.git
+
 npm init vite@latest
 
 cd gin-api-learn-web && npm run dev

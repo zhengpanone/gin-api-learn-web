@@ -3,6 +3,8 @@
     <el-form
       class="login-form"
       :rules="rules"
+      ref="form"
+       @submit.prevent="handleSubmit"
     >
       <div class="login-form-header">
         <img
@@ -45,7 +47,8 @@
           <img
             class="imgcode"
             alt="验证码"
-            src=""
+            :src="captchaSrc"
+            @click="loadCaptcha"
           >
         </div>
       </el-form-item>
@@ -63,13 +66,24 @@
   </div>
 </template>
 <script setup lang="ts">
-import { reactive } from 'vue'
+import { reactive,ref } from 'vue'
 const user = reactive({
-  account: '',
-  pwd: '',
+  account: 'admin',
+  pwd: '123456',
   imgcode: ''
 
 })
+const loading = ref(false)
+const rules = ref({
+  account: [{required: true, message: '请输入账号',trigger: 'change'}],
+  pwd:[{required: true, message:'请输入密码',trigger:'change'}],
+  imgcode: [{required: true, message:'请输入验证码',trigger:'change'}]
+})
+
+const handleSubmit = async ()=>{
+  console.log('handleSubmit');
+  
+}
 
 </script>
 
@@ -88,7 +102,7 @@ const user = reactive({
   border-radius: 6px;
   background: #fff;
   min-width: 350px;
-  .login-form-header {
+  .login-form__header {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -120,5 +134,5 @@ const user = reactive({
       height: 37px;
     }
   }
-  }
+}
 </style>

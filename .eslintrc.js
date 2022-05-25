@@ -21,5 +21,11 @@ module.exports = {
     defineEmits: 'readonly',
     defineExpose: 'readonly',
     withDefaults: 'readonly'
-  }
+  },
+  overrides: [{ // 关闭src/api下的驼峰命名检查
+    files: ['src/api/**/*.ts'],
+    rules: {
+      camelcase: 'off'
+    }
+  }]
 }

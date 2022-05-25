@@ -1,7 +1,7 @@
 import axios, { AxiosRequestConfig } from 'axios'
 
 const request = axios.create({
-  baseURL: 'http://localhost:8099/api/v1/'
+  baseURL: import.meta.env.VITE_API_BASEURL
 })
 // 请求拦截器
 request.interceptors.request.use(function (config) {

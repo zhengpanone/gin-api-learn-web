@@ -6,7 +6,7 @@ import type{ ICaptchaInfo } from './types/common'
 export const getCaptcha = () => {
   return request<ICaptchaInfo>({
     method: 'GET',
-    url: '/captcha',
+    url: '/api/captcha',
     responseType: 'json'
 
   })

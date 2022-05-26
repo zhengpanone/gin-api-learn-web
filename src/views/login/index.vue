@@ -4,12 +4,12 @@
       class="login-form"
       :rules="rules"
       ref="form"
-       @submit.prevent="handleSubmit"
+      @submit.prevent="handleSubmit"
     >
       <div class="login-form-header">
         <img
           class="login-logo"
-          src="@/assets/logo.png"
+          src="@/assets/login_logo.png"
           alt="logo"
         >
       </div>
@@ -66,23 +66,34 @@
   </div>
 </template>
 <script setup lang="ts">
-import { reactive,ref } from 'vue'
+import { getCaptcha } from '@/api/common'
+import type { ICaptchaInfo } from '@/api/types/common'
+import { onMounted, reactive, ref } from 'vue'
 const user = reactive({
   account: 'admin',
   pwd: '123456',
   imgcode: ''
 
 })
-const loading = ref(false)
-const rules = ref({
-  account: [{required: true, message: '请输入账号',trigger: 'change'}],
-  pwd:[{required: true, message:'请输入密码',trigger:'change'}],
-  imgcode: [{required: true, message:'请输入验证码',trigger:'change'}]
+
+const captchaSrc = ref <ICaptchaInfo['pic_path']>()
+onMounted(() => {
+  getCaptcha().then((res) => {
+    console.log(res)
+
+    captchaSrc.value = res.data.pic_path
+  })
 })
 
-const handleSubmit = async ()=>{
-  console.log('handleSubmit');
-  
+const loading = ref(false)
+const rules = ref({
+  account: [{ required: true, message: '请输入账号', trigger: 'change' }],
+  pwd: [{ required: true, message: '请输入密码', trigger: 'change' }],
+  imgcode: [{ required: true, message: '请输入验证码', trigger: 'change' }]
+})
+
+const handleSubmit = async () => {
+  console.log('handleSubmit')
 }
 
 </script>

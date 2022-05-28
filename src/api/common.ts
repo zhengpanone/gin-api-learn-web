@@ -7,7 +7,7 @@ export const getCaptcha = () => {
   return request<ICaptchaInfo>({
     method: 'GET',
     url: '/api/captcha',
+    params:{stamp:Date.now()},
     responseType: 'json'
-
   })
 }

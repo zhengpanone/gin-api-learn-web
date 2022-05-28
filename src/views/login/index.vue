@@ -19,7 +19,9 @@
           placeholder="请输入用户名"
         >
           <template #prefix>
-            <i class="el-input_icon el-icon-user" />
+            <i class="el-input_icon " >
+              <el-icon><User/></el-icon>
+            </i>
           </template>
         </el-input>
       </el-form-item>
@@ -29,7 +31,9 @@
           placeholder="请输入密码"
         >
           <template #prefix>
-            <i class="el-input__icon el-icon-lock" />
+            <i class="el-input__icon ">
+              <el-icon><Lock/></el-icon>
+            </i>
           </template>
         </el-input>
       </el-form-item>
@@ -41,7 +45,9 @@
             placeholder="请输入验证码"
           >
             <template #prefix>
-              <i class="el-input_icon el-icon-key" />
+               <i class="el-input_icon" >
+                 <el-icon><Key /></el-icon>
+                 </i>
             </template>
           </el-input>
           <img
@@ -66,6 +72,7 @@
   </div>
 </template>
 <script setup lang="ts">
+import { Key,User,Lock } from '@element-plus/icons-vue';
 import { getCaptcha } from '@/api/common'
 import type { ICaptchaInfo } from '@/api/types/common'
 import { onMounted, reactive, ref } from 'vue'
@@ -77,13 +84,15 @@ const user = reactive({
 })
 
 const captchaSrc = ref <ICaptchaInfo['pic_path']>()
-onMounted(() => {
-  getCaptcha().then((res) => {
-    console.log(res)
+onMounted(()=>{
+  loadCaptcha()
+})
 
+const loadCaptcha = async()=>{
+await getCaptcha().then((res) => {
     captchaSrc.value = res.data.pic_path
   })
-})
+}
 
 const loading = ref(false)
 const rules = ref({
@@ -141,6 +150,7 @@ const handleSubmit = async () => {
   .imgcode-wrap {
     display: flex;
     align-items: center;
+    width: 100%;
     .imgcode {
       height: 37px;
     }

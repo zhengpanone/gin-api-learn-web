@@ -4,6 +4,7 @@
       class="login-form"
       :rules="rules"
       ref="form"
+      :model="user"
       @submit.prevent="handleSubmit"
     >
       <div class="login-form-header">
@@ -13,41 +14,41 @@
           alt="logo"
         >
       </div>
-      <el-form-item prop="account">
+      <el-form-item prop="username">
         <el-input
-          v-model="user.account"
+          v-model="user.username"
           placeholder="请输入用户名"
         >
           <template #prefix>
-            <i class="el-input_icon " >
-              <el-icon><User/></el-icon>
+            <i class="el-input_icon ">
+              <el-icon><User /></el-icon>
             </i>
           </template>
         </el-input>
       </el-form-item>
-      <el-form-item prop="pwd">
+      <el-form-item prop="password">
         <el-input
-          v-model="user.pwd"
+          v-model="user.password"
           placeholder="请输入密码"
         >
           <template #prefix>
             <i class="el-input__icon ">
-              <el-icon><Lock/></el-icon>
+              <el-icon><Lock /></el-icon>
             </i>
           </template>
         </el-input>
       </el-form-item>
 
-      <el-form-item prop="imgcode">
+      <el-form-item prop="captcha">
         <div class="imgcode-wrap">
           <el-input
-            v-model="user.imgcode"
+            v-model="user.captcha"
             placeholder="请输入验证码"
           >
             <template #prefix>
-               <i class="el-input_icon" >
-                 <el-icon><Key /></el-icon>
-                 </i>
+              <i class="el-input_icon">
+                <el-icon><Key /></el-icon>
+              </i>
             </template>
           </el-input>
           <img
@@ -72,36 +73,58 @@
   </div>
 </template>
 <script setup lang="ts">
-import { Key,User,Lock } from '@element-plus/icons-vue';
-import { getCaptcha } from '@/api/common'
+import { Key, User, Lock } from '@element-plus/icons-vue'
+import { getCaptcha, login } from '@/api/common'
 import type { ICaptchaInfo } from '@/api/types/common'
 import { onMounted, reactive, ref } from 'vue'
-const user = reactive({
-  account: 'admin',
-  pwd: '123456',
-  imgcode: ''
+import { ElForm } from 'element-plus'
 
-})
+import { useRouter } from 'vue-router'
+const router = useRouter()
+const form = ref<InstanceType<typeof ElForm>|null>(null)
 
 const captchaSrc = ref <ICaptchaInfo['pic_path']>()
-onMounted(()=>{
+const user = reactive({
+  username: 'admin',
+  password: '123456',
+  captcha: '',
+  captchaId: ''
+
+})
+onMounted(() => {
   loadCaptcha()
 })
 
-const loadCaptcha = async()=>{
-await getCaptcha().then((res) => {
+const loadCaptcha = async () => {
+  await getCaptcha().then((res) => {
     captchaSrc.value = res.data.pic_path
+    user.captchaId = res.data.captcha_id
   })
 }
 
 const loading = ref(false)
 const rules = ref({
-  account: [{ required: true, message: '请输入账号', trigger: 'change' }],
-  pwd: [{ required: true, message: '请输入密码', trigger: 'change' }],
-  imgcode: [{ required: true, message: '请输入验证码', trigger: 'change' }]
+  username: [{ required: true, message: '请输入账号', trigger: 'change' }],
+  password: [{ required: true, message: '请输入密码', trigger: 'change' }],
+  captcha: [{ required: true, message: '请输入验证码', trigger: 'change' }]
 })
 
 const handleSubmit = async () => {
+  // 表单验证
+  const valid = await form.value?.validate()
+  if (!valid) {
+    return false
+  }
+  // 验证通过,展示loading
+  loading.value = true
+  // 请求提交
+  const loginData = await login(user)
+  console.log(loginData)
+  router.replace({
+    name: 'home'
+  })
+  // 处理响应
+
   console.log('handleSubmit')
 }
 
